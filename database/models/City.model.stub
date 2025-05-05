@@ -1,0 +1,97 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class City extends Model
+{
+    use HasFactory;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'cities';
+
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'id';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'int';
+
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+
+    /**
+     * Indicates if the model should be timestamped.
+     * Note: Even with custom defaults in migration, Eloquent manages them.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'state_id',
+        'state_code',
+        'country_id',
+        'country_code',
+        'latitude',
+        'longitude',
+        'flag',
+        'wikiDataId',
+        // Note: 'created_at' and 'updated_at' are typically not mass assignable
+        // unless you have specific reasons and handle them carefully.
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
+        'flag' => 'boolean',
+        'created_at' => 'datetime', // Cast the specific default timestamp too
+        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * Get the state that owns the city.
+     */
+    public function state(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    /**
+     * Get the country that owns the city.
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+}

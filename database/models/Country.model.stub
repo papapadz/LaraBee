@@ -1,0 +1,128 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Country extends Model
+{
+    use HasFactory;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'countries';
+
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'id';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'int';
+
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'iso3',
+        'numeric_code',
+        'iso2',
+        'phonecode',
+        'capital',
+        'currency',
+        'currency_name',
+        'currency_symbol',
+        'tld',
+        'native',
+        'region', // Note: Storing region name directly might be redundant if using region_id relationship
+        'region_id',
+        'subregion', // Note: Storing subregion name directly might be redundant if using subregion_id relationship
+        'subregion_id',
+        'nationality',
+        'timezones',
+        'translations',
+        'latitude',
+        'longitude',
+        'emoji',
+        'emojiU',
+        'flag',
+        'wikiDataId',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'timezones' => 'array', // Assuming timezones are stored as JSON
+        'translations' => 'array', // Assuming translations are stored as JSON
+        'latitude' => 'float',
+        'longitude' => 'float',
+        'flag' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * Get the region that owns the country.
+     */
+    public function region(): BelongsTo
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    /**
+     * Get the subregion that owns the country.
+     */
+    public function subregion(): BelongsTo
+    {
+        return $this->belongsTo(Subregion::class);
+    }
+
+    /**
+     * Get the states associated with the country.
+     */
+    public function states(): HasMany
+    {
+        return $this->hasMany(State::class);
+    }
+
+    /**
+     * Get the cities associated with the country.
+     * Note: This defines a direct relationship. Often cities are accessed via states.
+     */
+    public function cities(): HasMany
+    {
+        return $this->hasMany(City::class);
+    }
+}

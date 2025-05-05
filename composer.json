@@ -1,0 +1,33 @@
+{
+    "name": "binarybee-solutions/larabee",
+    "description": "Pre-built models and migrations generator",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Binary Bee Tech Solutions",
+            "email": "binaryee.solutions@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^11.0|^12.0",
+        "illuminate/database": "^11.0|^12.0", 
+        "illuminate/console": "^11.0|^12.0",
+        "symfony/process": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BinaryBeeTechSolutions\\LaraBee\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "BinaryBeeTechSolutions\\LaraBee\\LaraBeeServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

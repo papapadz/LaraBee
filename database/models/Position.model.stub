@@ -1,0 +1,19 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Position extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'title', 'profession_id', 'salary_grade'
+    ];
+
+    public function profession() {
+        return $this->belongsTo(Profession::class,'profession_id');
+    }
+}

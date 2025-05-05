@@ -1,0 +1,25 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class PersonCertification extends Model
+{
+    use HasFactory;
+    use SoftDeletes;
+
+    protected $fillable = [
+        'person_id', 'certification_id', 'license_no', 'rating', 'city_id', 'conferment_date', 'expiry_date'
+    ];
+
+    public function person() {
+        return $this->belongsTo(Person::class,'person_id');
+    }
+
+    public function certification() {
+        return $this->belongsTo(ProfessionalCertification::class,'certification_id');
+    }
+}

@@ -1,0 +1,24 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\City;
+
+class PersonAddress extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'person_id', 'city_id', 'house_number', 'street', 'village', 'barangay', 'zip', 'is_residential_address', 'year_started'
+    ];
+
+    public function person() {
+        return $this->belongsTo(Person::class,'person_id');
+    }
+
+    public function city() {
+        return $this->belongsTo(City::class,'city_id');
+    }
+}

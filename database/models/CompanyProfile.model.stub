@@ -1,0 +1,44 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class CompanyProfile extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'business_name',
+        'business_description', 
+        'city_id', 
+        'business_classification', 
+        'business_scope', 
+        'business_type_id', 
+        'street', 
+        'building_number', 
+        'barangay', 
+        'zip', 
+        'date_started', 
+        'date_ended', 
+        'is_government',
+        'created_by'
+    ];
+
+    public function areas() {
+        return $this->hasMany(CompanyArea::class,'company_id','id');
+    }
+
+    public function businessType() {
+        return $this->belongsTo(BusinessType::class,'business_type_id');
+    }
+
+    public function creator() {
+        return $this->belongsTo(User::class,'created_by');
+    }
+
+    public function address() {
+        return $this->belongsTo(City::class,'city_id')->with(['state','country']);
+    }
+}

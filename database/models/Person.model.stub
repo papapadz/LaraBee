@@ -1,0 +1,53 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Person extends Model
+{
+    use HasFactory;
+
+    protected $guarded = [];
+
+    public function affiliations() {
+        return $this->hasMany(PersonAffiliation::class,'person_id','id');
+    }
+
+    public function address() {
+        return $this->hasMany(PersonAddress::class,'person_id','id')->with('city');
+    }
+
+    public function family() {
+        return $this->hasMany(PersonFamilyInfo::class, 'person_id','id');
+    }
+
+    public function citizenship() {
+        return $this->belongsTo(Country::class,'citizenship_id','id');
+    }
+
+    public function certifications() {
+        return $this->hasMany(PersonCertification::class, 'person_id','id');
+    }
+
+    public function education() {
+        return $this->hasMany(PersonEducation::class, 'person_id','id');
+    }
+
+    public function medInfo() {
+        return $this->hasOne(PersonMedicalInfo::class, 'person_id','id');
+    }
+
+    public function account() {
+        return $this->hasOne(User::class, 'person_id','id');
+    }
+
+    public function contacts() {
+        return $this->hasMany(PersonContactInfo::class,'person_id');
+    }
+
+    public function employmentMembership() {
+        return $this->hasMany(PersonEmploymentMembership::class,'person_id');
+    }
+}

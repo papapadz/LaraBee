@@ -1,0 +1,23 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PersonFamilyInfo extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'person_id', 'person_related_to_id', 'relationship'
+    ];
+
+    public function person() {
+        return $this->belongsTo(Person::class,'person_id');
+    }
+
+    public function personRelatedTo() {
+        return $this->belongsTo(Person::class,'person_related_to_id');
+    }
+}

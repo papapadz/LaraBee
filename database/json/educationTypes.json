@@ -1,0 +1,9 @@
+[
+    {"level": "Elementary","description": "Elementary", "score":"1"},
+    {"level": "Secondary","description": "Secondary", "score":"2"},
+    {"level": "Junior High School", "description": "Junior High School", "score":"3"},
+    {"level": "Senior High School", "description": "Senior High School", "score":"4"},
+    {"level": "Vocational","description": "Vocational", "score":"5"},
+    {"level": "College","description": "College", "score":"6"},
+    {"level": "Graduate Studies","description": "Graduate Studies", "score":"7"}
+]

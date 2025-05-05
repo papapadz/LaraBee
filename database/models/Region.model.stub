@@ -1,0 +1,91 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Region extends Model
+{
+    use HasFactory;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'regions';
+
+    /**
+     * The primary key associated with the table.
+     * Although 'id' is default, explicitly defining for clarity with mediumIncrements.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'id';
+
+    /**
+     * The "type" of the primary key ID.
+     * Set to 'int' as mediumIncrements produces an integer type.
+     *
+     * @var string
+     */
+    protected $keyType = 'int';
+
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     * True by default, matches mediumIncrements.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+
+    /**
+     * Indicates if the model should be timestamped.
+     * True by default, matches presence of created_at/updated_at.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'translations',
+        'flag',
+        'wikiDataId',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'translations' => 'array', // Assuming translations are stored as JSON
+        'flag' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * Get the subregions associated with the region.
+     */
+    public function subregions(): HasMany
+    {
+        return $this->hasMany(Subregion::class);
+    }
+
+    /**
+     * Get the countries associated with the region.
+     */
+    public function countries(): HasMany
+    {
+        return $this->hasMany(Country::class);
+    }
+}

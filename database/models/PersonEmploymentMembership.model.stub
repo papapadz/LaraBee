@@ -1,0 +1,23 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PersonEmploymentMembership extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'person_id', 'mandatory_membership_id', 'num', 'start_date'
+    ];
+
+    public function person() {
+        return $this->belongsTo(Person::class,'person_id');
+    }
+
+    public function mandatoryMembership() {
+        return $this->belongsTo(MandatoryEmploymentMembership::class,'mandatory_membership_id');
+    }
+}

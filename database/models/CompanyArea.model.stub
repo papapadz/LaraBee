@@ -1,0 +1,44 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class CompanyArea extends Model
+{
+    use HasFactory;
+    use SoftDeletes;
+
+    protected $fillable = [
+        'name', 'description', 'company_id', 'headed_by', 'city_id', 'is_active'
+    ];
+
+    public function company() {
+        return $this->belongsTo(CompanyProfile::class,'company_id');
+    }
+
+    public function personnel() {
+        return $this->hasManyThrough(
+            Person::class,
+            PersonAffiliation::class,
+            'company_area_id',
+            'id',
+            'id',
+            'person_id'
+        );
+    }
+
+    public function affiliations() {
+        return $this->hasMany(PersonAffiliation::class,'company_area_id','id');
+    }
+
+    public function areaHead() {
+        return $this->belongsTo(Person::class,'headed_by');
+    }
+
+    public function city() {
+        return $this->belongsTo(City::class,'city_id');
+    }
+}

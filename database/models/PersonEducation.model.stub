@@ -1,0 +1,23 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PersonEducation extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'person_id', 'education_type_id', 'school_name', 'course_name', 'city_id', 'year_started', 'year_ended', 'units_earned', 'academic_awards'
+    ];
+
+    public function person() {
+        return $this->belongsTo(Person::class,'person_id');
+    }
+
+    public function type() {
+        return $this->belongsTo(EducationType::class,'education_type_id');
+    }
+}
